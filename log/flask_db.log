@@ -1,0 +1,6 @@
+INFO:werkzeug: * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 137-344-603
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2021 16:00:08] "[37mPOST /insert HTTP/1.1[0m" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Apr/2021 16:00:14] "[35m[1mPOST /insert HTTP/1.1[0m" 500 -
