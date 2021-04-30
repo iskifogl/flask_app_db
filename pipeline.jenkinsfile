@@ -1,0 +1,44 @@
+pipeline{
+    agent any
+    
+    environment{
+        dockerImage = ''
+        registryCredential = 'dockerhub_id'
+    }
+    
+    stages{
+        stage('Git Checkout'){
+            steps {
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: "*/master"]],
+                    doGenerateSubmoduleConfigurations: false,
+                    userRemoteConfigs: [[
+                        url: "https://github.com/iskifogl/flask_app_db.git" ]]
+                ])
+            }
+        }
+        stage('Docker Build'){
+            steps{
+                sh """
+                    docker build -t iskifogl/jenkins101-case-1:1.0 .
+                """
+            }
+        }
+        stage('Uploading Image to DockerHub'){
+            steps{
+                    sh 'docker push iskifogl/jenkins101-case-1:1.0'
+                }
+            }
+        stage('Docker Stop Container'){
+            steps{
+                   sh'docker rm -f $(docker ps -aq)'
+            }
+        }
+        stage('Docker Run') {
+            steps{
+                    sh 'docker run -tid -p 8085:8080 iskifogl/jenkins101-case-1:1.0'
+            }
+        }
+    }
+}
